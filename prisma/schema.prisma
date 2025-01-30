@@ -1,0 +1,126 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id       Int      @id @default(autoincrement())
+  name     String
+  password String
+  role     Int
+  characters Character[]
+}
+
+model Character {
+  id          Int    @id @default(autoincrement())
+  
+  name        String
+  weapon1Id   Int?
+  weapon2Id   Int?
+  armor1Id    Int?
+  armor2Id    Int?
+  accessory1Id Int?
+  accessory2Id Int?
+  stats       Stats_characters[]
+
+  weapon1     Weapons? @relation("CharacterWeapon1", fields: [weapon1Id], references: [id])
+  weapon2     Weapons? @relation("CharacterWeapon2", fields: [weapon2Id], references: [id])
+  armor1      Armors?  @relation("CharacterArmor1", fields: [armor1Id], references: [id])
+  armor2      Armors?  @relation("CharacterArmor2", fields: [armor2Id], references: [id])
+  accessory1  Accessories? @relation("CharacterAccessory1", fields: [accessory1Id], references: [id])
+  accessory2  Accessories? @relation("CharacterAccessory2", fields: [accessory2Id], references: [id])
+  user        User?        @relation(fields: [userId], references: [id])
+
+  userId      Int?
+}
+
+model Weapons {
+  id      Int      @id @default(autoincrement())
+  name    String
+  min_damage Int
+  max_damage Int
+  damage_reduction Int?
+  Stats  Stats_Weapons[]
+
+  Character1 Character[] @relation("CharacterWeapon1")
+  Character2 Character[] @relation("CharacterWeapon2")
+}
+
+model Armors {
+  id      Int      @id @default(autoincrement())
+  name    String
+  melee_defence Int
+  ranged_defence Int
+
+  Stats  Stats_Armors[]
+  Character1 Character[] @relation("CharacterArmor1")
+  Character2 Character[] @relation("CharacterArmor2")
+
+}
+
+model Accessories {
+  id      Int      @id @default(autoincrement())
+  name    String
+  magic_defence Int
+
+  Stats  Stats_accessories[]
+  Character1 Character[] @relation("CharacterAccessory1")
+  Character2 Character[] @relation("CharacterAccessory2")
+}
+
+model Stats {
+  id      Int      @id @default(autoincrement())
+  name   String
+
+  Stats_Weapons Stats_Weapons[]
+  Stats_Armors Stats_Armors[]
+  Stats_accessories Stats_accessories[]
+  Stats_characters Stats_characters[]
+}
+
+model Stats_Weapons {
+  weapon_id Int
+  stat_id   Int
+  value     Int
+  weapon    Weapons @relation(fields: [weapon_id], references: [id], onDelete: Cascade)
+  stat      Stats   @relation(fields: [stat_id], references: [id])
+
+  @@id([weapon_id, stat_id])
+}
+
+model Stats_Armors {
+  armor_id Int
+  stat_id   Int
+  value     Int
+  armor    Armors @relation(fields: [armor_id], references: [id], onDelete: Cascade)
+  stat      Stats   @relation(fields: [stat_id], references: [id])
+
+  @@id([armor_id, stat_id])
+}
+
+model Stats_accessories {
+  accessory_id Int
+  stat_id   Int
+  value     Int
+  accessory    Accessories @relation(fields: [accessory_id], references: [id], onDelete: Cascade)
+  stat      Stats   @relation(fields: [stat_id], references: [id])
+
+  @@id([accessory_id, stat_id])
+}
+
+model Stats_characters {
+  character_id Int
+  stat_id   Int
+  value     Int
+  character    Character @relation(fields: [character_id], references: [id], onDelete: Cascade)
+  stat      Stats   @relation(fields: [stat_id], references: [id])
+
+  @@id([character_id, stat_id])
+}

@@ -1,0 +1,1658 @@
+openapi: 3.0.0
+servers: 
+  - url: 'http://localhost:3000' 
+info:
+  title: OpenAPI Specification
+  version: "1"
+tags:
+  - name: Users
+  - name: Accessories
+  - name: Armors
+  - name: Weapons
+  - name: Characters
+
+paths:
+  /users:
+    post:
+      tags:
+        - Users
+      operationId: createUser
+      summary: "Create a new user"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                password:
+                  type: string
+      responses:
+        '201':
+          description: User created
+        '400':
+          description: Invalid input
+    get:
+      tags:
+        - Users
+      operationId: listUsers
+      summary: "List all users"
+      parameters:
+        - name: "sortBy"
+          in: "query"
+          description: "Sort by"
+          required: false
+          schema:
+            type: "string"
+        - name: "sortDirection"
+          in: "query"
+          description: "Sort direction"
+          required: false
+          schema:
+            type: "string"
+            enum: ["asc", "desc"]
+      responses:
+        '200':
+          description: A list of users
+  /users/{id}:
+    get:
+      tags:
+        - Users
+      operationId: getUserById
+      summary: "Get user by id"
+      parameters:
+        - name: "id"
+          in: "path"
+          description: "ID of user to return"
+          required: true
+          schema:
+            type: "integer"
+            format: "int64"
+      responses:
+        '200':
+          description: "successful operation"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    format: int64
+                  name:
+                    type: string
+                  password:
+                    type: string
+        '400':
+          description: "Invalid ID supplied"
+        '404':
+          description: "User not found"
+    put:
+      tags:
+        - Users
+      operationId: updateUser
+      summary: "Update an existing user"
+      parameters:
+        - name: "id"
+          in: "path"
+          description: "ID of user to return"
+          required: true
+          schema:
+            type: "integer"
+            format: "int64"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                password:
+                  type: string
+      responses:
+        '200':
+          description: "successful operation"
+        '400':
+          description: "Invalid ID supplied"
+        '404':
+          description: "User not found"
+    delete:
+      tags:
+        - Users
+      operationId: deleteUser
+      summary: "Delete a user"
+      parameters:
+        - name: "id"
+          in: "path"
+          description: "ID of user to return"
+          required: true
+          schema:
+            type: "integer"
+            format: "int64"
+      responses:
+        '200':
+          description: "successful operation"
+        '400':
+          description: "Invalid ID supplied"
+        '404':
+          description: "User not found"
+  /users/login:
+    post:
+      tags:
+        - Users
+      operationId: loginUser
+      summary: "Login user"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                password:
+                  type: string
+      responses:
+        '200':
+          description: User logged in
+        '400':
+          description: Invalid input
+
+
+  /accessories:
+    post:
+      tags:
+        - Accessories
+      operationId: createAccessory
+      summary: "Create a new accessory"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                magic_defence:
+                  type: integer
+      responses:
+        '201':
+          description: Accessory created
+        '400':
+          description: Invalid input
+    get:
+      tags:
+        - Accessories
+      operationId: listAccessories
+      summary: "List all accessories"
+      parameters:
+        - name: "sortBy"
+          in: "query"
+          description: "Sort by"
+          required: false
+          schema:
+            type: "string"
+        - name: "sortDirection"
+          in: "query"
+          description: "Sort direction"
+          required: false
+          schema:
+            type: "string"
+            enum: ["asc", "desc"]
+      responses:
+        '200':
+          description: A list of accessories
+  /accessories/{id}:
+    get:
+      tags:
+        - Accessories
+      operationId: getAccessoryById
+      summary: "Get accessory by id"
+      parameters:
+        - name: "id"
+          in: "path"
+          description: "ID of accessory to return"
+          required: true
+          schema:
+            type: "integer"
+            format: "int64"
+      responses:
+        '200':
+          description: "successful operation"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    format: int64
+                  name:
+                    type: string
+                  magic_defence:
+                    type: integer
+        '400':
+          description: "Invalid ID supplied"
+        '404':
+          description: "Accessory not found"
+    put:
+      tags:
+        - Accessories
+      operationId: updateAccessory
+      summary: "Update an existing accessory"
+      parameters:
+        - name: "id"
+          in: "path"
+          description: "ID of accessory to return"
+          required: true
+          schema:
+            type: "integer"
+            format: "int64"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                magic_defence:
+                  type: integer
+      responses:
+        '200':
+          description: "successful operation"
+        '400':
+          description: "Invalid ID supplied"
+        '404':
+          description: "Accessory not found"
+    delete:
+      tags:
+        - Accessories
+      operationId: deleteAccessory
+      summary: "Delete an accessory"
+      parameters:
+        - name: "id"
+          in: "path"
+          description: "ID of accessory to return"
+          required: true
+          schema:
+            type: "integer"
+            format: "int64"
+      responses:
+        '200':
+          description: "successful operation"
+        '400':
+          description: "Invalid ID supplied"
+        '404':
+          description: "Accessory not found"
+  /accessories/stats:
+    post:
+      tags:
+        - Accessories stats
+      operationId: createAccessoryStats
+      summary: "Create a new accessory stats"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                accessory_id:
+                  type: integer
+                stat_id:
+                  type: integer
+                value:
+                  type: integer
+      responses:
+        '201':
+          description: Accessory stats created
+        '400':
+          description: Invalid input
+    get:
+      tags:
+        - Accessories stats
+      operationId: listAccessoryStats
+      summary: "List all accessory stats"
+      parameters:
+        - name: "sortBy"
+          in: "query"
+          description: "Sort by"
+          required: false
+          schema:
+            type: "string"
+        - name: "sortDirection"
+          in: "query"
+          description: "Sort direction"
+          required: false
+          schema:
+            type: "string"
+            enum: ["asc", "desc"]
+      responses:
+        '200':
+          description: A list of accessory stats
+  /accessories/{id}/stats:
+    get:
+      tags:
+        - Accessories stats
+      operationId: getAccessoryStats
+      summary: "Get accessory stats"
+      parameters:
+        - name: "id"
+          in: "path"
+          description: "ID of accessory to return"
+          required: true
+          schema:
+            type: "integer"
+            format: "int64"
+      responses:
+        '200':
+          description: "successful operation"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    format: int64
+                  statId:
+                    type: integer
+                  value:
+                    type: integer
+        '400':
+          description: "Invalid ID supplied"
+        '404':
+          description: "Accessory not found"
+    post:
+      tags:
+        - Accessories
+      summary: "Create a new accessory stats"
+      parameters:
+        - name: "id"
+          in: "path"
+          description: "ID of accessory to return"
+          required: true
+          schema:
+            type: "integer"
+            format: "int64"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: integer
+                statId:
+                  type: integer
+                value:
+                  type: integer          
+      responses:
+        '201':
+          description: Accessory stats created
+        '400':
+          description: Invalid input
+  /accessories/{id}/stats/{stat_id}:
+    get:
+      tags:
+        - Accessories stats
+      operationId: getAccessoryStatsById
+      summary: "Get accessory stats by id"
+      parameters:
+        - name: "id"
+          in: "path"
+          description: "ID of accessory to return"
+          required: true
+          schema:
+            type: "integer"
+            format: "int64"
+        - name: "stat_id"
+          in: "path"
+          description: "ID of accessory stats to return"
+          required: true
+          schema:
+            type: "integer"
+            format: "int64"
+      responses:
+        '200':
+          description: "successful operation"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    format: int64
+                  statId:
+                    type: integer
+                  value:
+                    type: integer
+        '400':
+          description: "Invalid ID supplied"
+        '404':
+          description: "Accessory stats not found"
+    put:
+      tags:
+        - Accessories stats
+      operationId: updateAccessoryStats
+      summary: "Update an existing accessory stats"
+      parameters:
+        - name: "id"
+          in: "path"
+          description: "ID of accessory to return"
+          required: true
+          schema:
+            type: "integer"
+            format: "int64"
+        - name: "stat_id"
+          in: "path"
+          description: "ID of accessory stats to return"
+          required: true
+          schema:
+            type: "integer"
+            format: "int64"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: integer
+                statId:
+                  type: integer
+                value:
+                  type: integer
+      responses:
+        '200':
+          description: "successful operation"
+        '400':
+          description: "Invalid ID supplied"
+        '404':
+          description: "Accessory stats not found"
+    delete:
+      tags:
+        - Accessories stats
+      operationId: deleteAccessoryStats
+      summary: "Delete a accessory stats"
+      parameters:
+        - name: "id"
+          in: "path"
+          description: "ID of accessory to return"
+          required: true
+          schema:
+            type: "integer"
+            format: "int64"
+        - name: "stat_id"
+          in: "path"
+          description: "ID of accessory stats to return"
+          required: true
+          schema:
+            type: "integer"
+            format: "int64"
+      responses:
+        '200':
+          description: "successful operation"
+        '400':
+          description: "Invalid ID supplied"
+        '404':
+          description: "Accessory stats not found"
+  
+
+  /armors:
+    post:
+      tags:
+        - Armors
+      operationId: createArmor
+      summary: "Create a new armor"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                melee_defence:
+                  type: integer
+                ranged_defence:
+                  type: integer
+      responses:
+        '201':
+          description: Armor created
+        '400':
+          description: Invalid input
+    get:
+      tags:
+        - Armors
+      operationId: listArmors
+      summary: "List all armors"
+      parameters:
+        - name: "sortBy"
+          in: "query"
+          description: "Sort by"
+          required: false
+          schema:
+            type: "string"
+        - name: "sortDirection"
+          in: "query"
+          description: "Sort direction"
+          required: false
+          schema:
+            type: "string"
+            enum: ["asc", "desc"]
+      responses:
+        '200':
+          description: A list of armors
+
+  /armors/{id}:
+    get:
+      tags:
+        - Armors
+      operationId: getArmorById
+      summary: "Get armor by id"
+      parameters:
+        - name: "id"
+          in: "path"
+          description: "ID of armor to return"
+          required: true
+          schema:
+            type: "integer"
+            format: "int64"
+      responses:
+        '200':
+          description: "successful operation"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    format: int64
+                  name:
+                    type: string
+                  melee_defence:
+                    type: integer
+                  ranged_defence:
+                    type: integer
+        '400':
+          description: "Invalid ID supplied"
+        '404':
+          description: "Armor not found"
+    put:
+      tags:
+        - Armors
+      operationId: updateArmor
+      summary: "Update an existing armor"
+      parameters:
+        - name: "id"
+          in: "path"
+          description: "ID of armor to return"
+          required: true
+          schema:
+            type: "integer"
+            format: "int64"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                melee_defence:
+                  type: integer
+                ranged_defence:
+                  type: integer
+      responses:
+        '200':
+          description: "successful operation"
+        '400':
+          description: "Invalid ID supplied"
+        '404':
+          description: "Armor not found"
+    delete:
+      tags:
+        - Armors
+      operationId: deleteArmor
+      summary: "Delete an armor"
+      parameters:
+        - name: "id"
+          in: "path"
+          description: "ID of armor to return"
+          required: true
+          schema:
+            type: "integer"
+            format: "int64"
+      responses:
+        '200':
+          description: "successful operation"
+        '400':
+          description: "Invalid ID supplied"
+        '404':
+          description: "Armor not found"
+  /armors/stats:
+    post:
+      tags:
+        - Armors stats
+      operationId: createArmorStats
+      summary: "Create a new armor stats"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                armor_id:
+                  type: integer
+                stat_id:
+                  type: integer
+                value:
+                  type: integer
+      responses:
+        '201':
+          description: Armor stats created
+        '400':
+          description: Invalid input
+    get:
+      tags:
+        - Armors stats
+      operationId: listArmorStats
+      summary: "List all armor stats"
+      parameters:
+        - name: "sortBy"
+          in: "query"
+          description: "Sort by"
+          required: false
+          schema:
+            type: "string"
+        - name: "sortDirection"
+          in: "query"
+          description: "Sort direction"
+          required: false
+          schema:
+            type: "string"
+            enum: ["asc", "desc"]
+      responses:
+        '200':
+          description: A list of armor stats
+  /armors/{id}/stats:
+    get:
+      tags:
+        - Armors stats
+      operationId: getArmorStats
+      summary: "Get armor stats"
+      parameters:
+        - name: "id"
+          in: "path"
+          description: "ID of armor to return"
+          required: true
+          schema:
+            type: "integer"
+            format: "int64"
+      responses:
+        '200':
+          description: "successful operation"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    format: int64
+                  statId:
+                    type: integer
+                  value:
+                    type: integer
+        '400':
+          description: "Invalid ID supplied"
+        '404':
+          description: "Armor not found"
+    post:
+      tags:
+        - Armors stats
+      summary: "Create a new armor stats"
+      parameters:
+        - name: "id"
+          in: "path"
+          description: "ID of armor to return"
+          required: true
+          schema:
+            type: "integer"
+            format: "int64"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: integer
+                statId:
+                  type: integer
+                value:
+                  type: integer          
+      responses:
+        '201':
+          description: Armor stats created
+        '400':
+          description: Invalid input
+  /armors/{id}/stats/{stat_id}:
+    get:
+      tags:
+        - Armors stats
+      operationId: getArmorStatsById
+      summary: "Get armor stats by id"
+      parameters:
+        - name: "id"
+          in: "path"
+          description: "ID of armor to return"
+          required: true
+          schema:
+            type: "integer"
+            format: "int64"
+        - name: "stat_id"
+          in: "path"
+          description: "ID of armor stats to return"
+          required: true
+          schema:
+            type: "integer"
+            format: "int64"
+      responses:
+        '200':
+          description: "successful operation"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    format: int64
+                  statId:
+                    type: integer
+                  value:
+                    type: integer
+        '400':
+          description: "Invalid ID supplied"
+        '404':
+          description: "Armor stats not found"
+    put:
+      tags:
+        - Armors stats
+      operationId: updateArmorStats
+      summary: "Update an existing armor stats"
+      parameters:
+        - name: "id"
+          in: "path"
+          description: "ID of armor to return"
+          required: true
+          schema:
+            type: "integer"
+            format: "int64"
+        - name: "stat_id"
+          in: "path"
+          description: "ID of armor stats to return"
+          required: true
+          schema:
+            type: "integer"
+            format: "int64"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: integer
+                statId:
+                  type: integer
+                value:
+                  type: integer
+      responses:
+        '200':
+          description: "successful operation"
+        '400':
+          description: "Invalid ID supplied"
+        '404':
+          description: "Armor stats not found"
+    delete:
+      tags:
+        - Armors stats
+      operationId: deleteArmorStats
+      summary: "Delete a armor stats"
+      parameters:
+        - name: "id"
+          in: "path"
+          description: "ID of armor to return"
+          required: true
+          schema:
+            type: "integer"
+            format: "int64"
+        - name: "stat_id"
+          in: "path"
+          description: "ID of armor stats to return"
+          required: true
+          schema:
+            type: "integer"
+            format: "int64"
+      responses:
+        '200':
+          description: "successful operation"
+        '400':
+          description: "Invalid ID supplied"
+        '404':
+          description: "Armor stats not found"
+  
+
+  /weapons:
+    post:
+      tags:
+        - Weapons
+      operationId: createWeapon
+      summary: "Create a new weapon"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                min_damage:
+                  type: integer
+                max_damage:
+                  type: integer
+                damage_reduction:
+                  type: integer
+      responses:
+        '201':
+          description: Weapon created
+        '400':
+          description: Invalid input
+    get:
+      tags:
+        - Weapons
+      operationId: listWeapons
+      summary: "List all weapons"
+      parameters:
+        - name: "sortBy"
+          in: "query"
+          description: "Sort by"
+          required: false
+          schema:
+            type: "string"
+        - name: "sortDirection"
+          in: "query"
+          description: "Sort direction"
+          required: false
+          schema:
+            type: "string"
+            enum: ["asc", "desc"]
+      responses:
+        '200':
+          description: A list of weapons
+  /weapons/{id}:
+    get:
+      tags:
+        - Weapons
+      operationId: getWeaponById
+      summary: "Get weapon by id"
+      parameters:
+        - name: "id"
+          in: "path"
+          description: "ID of weapon to return"
+          required: true
+          schema:
+            type: "integer"
+            format: "int64"
+      responses:
+        '200':
+          description: "successful operation"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    format: int64
+                  name:
+                    type: string
+                  min_damage:
+                    type: integer
+                  max_damage:
+                    type: integer
+                  damage_reduction:
+                    type: integer
+        '400':
+          description: "Invalid ID supplied"
+        '404':
+          description: "Weapon not found"
+    put:
+      tags:
+        - Weapons
+      operationId: updateWeapon
+      summary: "Update an existing weapon"
+      parameters:
+        - name: "id"
+          in: "path"
+          description: "ID of weapon to return"
+          required: true
+          schema:
+            type: "integer"
+            format: "int64"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                min_damage:
+                  type: integer
+                max_damage:
+                  type: integer
+                damage_reduction:
+                  type: integer
+      responses:
+        '200':
+          description: "successful operation"
+        '400':
+          description: "Invalid ID supplied"
+        '404':
+          description: "Weapon not found"
+    delete:
+      tags:
+        - Weapons
+      operationId: deleteWeapon
+      summary: "Delete a weapon"
+      parameters:
+        - name: "id"
+          in: "path"
+          description: "ID of weapon to return"
+          required: true
+          schema:
+            type: "integer"
+            format: "int64"
+      responses:
+        '200':
+          description: "successful operation"
+        '400':
+          description: "Invalid ID supplied"
+        '404':
+          description: "Weapon not found"
+          
+  /weapons/stats:
+    post:
+      tags:
+        - Weapons stats
+      operationId: createWeaponStats
+      summary: "Create a new weapon stats"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                weapon_id:
+                  type: integer
+                stat_id:
+                  type: integer
+                value:
+                  type: integer
+      responses:
+        '201':
+          description: Weapon stats created
+        '400':
+          description: Invalid input
+    get:
+      tags:
+        - Weapons stats
+      operationId: listWeaponStats
+      summary: "List all weapon stats"
+      parameters:
+        - name: "sortBy"
+          in: "query"
+          description: "Sort by"
+          required: false
+          schema:
+            type: "string"
+        - name: "sortDirection"
+          in: "query"
+          description: "Sort direction"
+          required: false
+          schema:
+            type: "string"
+            enum: ["asc", "desc"]
+      responses:
+        '200':
+          description: A list of weapon stats
+
+
+  /weapons/{id}/stats:
+    get:
+      tags:
+        - Weapons stats
+      operationId: getWeaponStats
+      summary: "Get weapon stats"
+      parameters:
+        - name: "id"
+          in: "path"
+          description: "ID of weapon to return"
+          required: true
+          schema:
+            type: "integer"
+            format: "int64"
+      responses:
+        '200':
+          description: "successful operation"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    format: int64
+                  statId:
+                    type: integer
+                  value:
+                    type: integer
+        '400':
+          description: "Invalid ID supplied"
+        '404':
+          description: "Weapon not found"
+    post:
+      tags:
+        - Weapons stats
+      summary: "Create a new weapon stats"
+      parameters:
+        - name: "id"
+          in: "path"
+          description: "ID of weapon to return"
+          required: true
+          schema:
+            type: "integer"
+            format: "int64"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: integer
+                statId:
+                  type: integer
+                value:
+                  type: integer          
+      responses:
+        '201':
+          description: Weapon stats created
+        '400':
+          description: Invalid input
+  /weapons/{id}/stats/{stat_id}:
+    get:
+      tags:
+        - Weapons stats
+      operationId: getWeaponStatsById
+      summary: "Get weapon stats by id"
+      parameters:
+        - name: "id"
+          in: "path"
+          description: "ID of weapon to return"
+          required: true
+          schema:
+            type: "integer"
+            format: "int64"
+        - name: "stat_id"
+          in: "path"
+          description: "ID of weapon stats to return"
+          required: true
+          schema:
+            type: "integer"
+            format: "int64"
+      responses:
+        '200':
+          description: "successful operation"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    format: int64
+                  statId:
+                    type: integer
+                  value:
+                    type: integer
+        '400':
+          description: "Invalid ID supplied"
+        '404':
+          description: "Weapon stats not found"
+    put:
+      tags:
+        - Weapons stats
+      operationId: updateWeaponStats
+      summary: "Update an existing weapon stats"
+      parameters:
+        - name: "id"
+          in: "path"
+          description: "ID of weapon to return"
+          required: true
+          schema:
+            type: "integer"
+            format: "int64"
+        - name: "stat_id"
+          in: "path"
+          description: "ID of weapon stats to return"
+          required: true
+          schema:
+            type: "integer"
+            format: "int64"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: integer
+                statId:
+                  type: integer
+                value:
+                  type: integer
+      responses:
+        '200':
+          description: "successful operation"
+        '400':
+          description: "Invalid ID supplied"
+        '404':
+          description: "Weapon stats not found"
+    delete:
+      tags:
+        - Weapons stats
+      operationId: deleteWeaponStats
+      summary: "Delete a weapon stats"
+      parameters:
+        - name: "id"
+          in: "path"
+          description: "ID of weapon to return"
+          required: true
+          schema:
+            type: "integer"
+            format: "int64"
+        - name: "stat_id"
+          in: "path"
+          description: "ID of weapon stats to return"
+          required: true
+          schema:
+            type: "integer"
+            format: "int64"
+      responses:
+        '200':
+          description: "successful operation"
+        '400':
+          description: "Invalid ID supplied"
+        '404':
+          description: "Weapon stats not found"
+
+
+
+
+  /characters:
+    post:
+      tags:
+        - Characters
+      operationId: createCharacter
+      summary: "Create a new character"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                user_id:
+                  type: integer
+                weapon1Id:
+                  type: integer
+                armor1Id:
+                  type: integer
+                armor2Id:
+                  type: integer
+                accessory1Id:
+                  type: integer
+                accessory2Id:
+                  type: integer
+      responses:
+        '201':
+          description: Character created
+        '400':
+          description: Invalid input
+    get:
+      tags:
+        - Characters
+      operationId: listCharacters
+      summary: "List all characters"
+      parameters:
+        - name: "sortBy"
+          in: "query"
+          description: "Sort by"
+          required: false
+          schema:
+            type: "string"
+        - name: "sortDirection"
+          in: "query"
+          description: "Sort direction"
+          required: false
+          schema:
+            type: "string"
+            enum: ["asc", "desc"]
+      responses:
+        '200':
+          description: A list of characters
+  /characters/{id}:
+    get:
+      tags:
+        - Characters
+      operationId: getCharacterById
+      summary: "Get character by id"
+      parameters:
+        - name: "id"
+          in: "path"
+          description: "ID of character to return"
+          required: true
+          schema:
+            type: "integer"
+            format: "int64"
+      responses:
+        '200':
+          description: "successful operation"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    format: int64
+                  name:
+                    type: string
+                  user_id:
+                    type: integer
+                  weapon1Id:
+                    type: integer
+                  armor1Id:
+                    type: integer
+                  armor2Id:
+                    type: integer
+                  accessory1Id:
+                    type: integer
+                  accessory2Id:
+                    type: integer
+        '400':
+          description: "Invalid ID supplied"
+        '404':
+          description: "Character not found"
+    put:
+      tags:
+        - Characters
+      operationId: updateCharacter
+      summary: "Update an existing character"
+      parameters:
+        - name: "id"
+          in: "path"
+          description: "ID of character to update"
+          required: true
+          schema:
+            type: "integer"
+            format: "int64"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                user_id:
+                  type: integer
+                weapon1Id:
+                  type: integer
+                armor1Id:
+                  type: integer
+                armor2Id:
+                  type: integer
+                accessory1Id:
+                  type: integer
+                accessory2Id:
+                  type: integer
+      responses:
+        '200':
+          description: "successful operation"
+        '400':
+          description: "Invalid ID supplied"
+        '404':
+          description: "Character not found"
+    delete:
+      tags:
+        - Characters
+      operationId: deleteCharacter
+      summary: "Delete a character"
+      parameters:
+        - name: "id"
+          in: "path"
+          description: "ID of character to delete"
+          required: true
+          schema:
+            type: "integer"
+            format: "int64"
+      responses:
+        '200':
+          description: "successful operation"
+        '400':
+          description: "Invalid ID supplied"
+        '404':
+          description: "Character not found"
+  /characters/{id}/stats:
+    get:
+      tags:
+        - Characters stats
+      operationId: getCharacterStats
+      summary: "Get character stats"
+      parameters:
+        - name: "id"
+          in: "path"
+          description: "ID of character to return"
+          required: true
+          schema:
+            type: "integer"
+            format: "int64"
+      responses:
+        '200':
+          description: "successful operation"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    format: int64
+                  statId:
+                    type: integer
+                  value:
+                    type: integer
+        '400':
+          description: "Invalid ID supplied"
+        '404':
+          description: "Character not found"
+  /characters/{id}/basicStats:
+    get:
+      tags:
+        - Characters stats
+      operationId: getCharacterBasicStats
+      summary: "Get character basic stats"
+      parameters:
+        - name: "id"
+          in: "path"
+          description: "ID of character to return"
+          required: true
+          schema:
+            type: "integer"
+            format: "int64"
+      responses:
+        '200':
+          description: "successful operation"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  hp:
+                    type: integer
+                  min_damage1:
+                    type: integer
+                  max_damage1:
+                    type: integer
+                  min_damage2:
+                    type: integer
+                  max_damage2:
+                    type: integer
+                  melee_defence:
+                    type: integer
+                  ranged_defence:
+                    type: integer
+                  magic_defence:
+                    type: integer
+        '400':
+          description: "Invalid ID supplied"
+        '404':
+          description: "Character not found"
+  /characters/{id}/hitpool:
+    get:
+      tags:
+        - Characters stats
+      operationId: getCharacterHitpool
+      summary: "Get character hitpool"
+      parameters:
+        - name: "id"
+          in: "path"
+          description: "ID of character to return"
+          required: true
+          schema:
+            type: "integer"
+            format: "int64"
+      responses:
+        '200':
+          description: "successful operation"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  melee_effectiveHitPool:
+                    type: integer
+                  melee_bosseffectiveHit:
+                    type: integer
+                  melee_mobeffectiveHit:
+                    type: integer
+                  ranged_effectiveHitPool:
+                    type: integer
+                  ranged_bosseffectiveHit:
+                    type: integer
+                  ranged_mobeffectiveHit:
+                    type: integer
+                  magic_effectiveHitPool:
+                    type: integer
+                  magic_bosseffectiveHit:
+                    type: integer
+                  magic_mobeffectiveHit:
+                    type: integer
+        '400':
+          description: "Invalid ID supplied"
+        '404':
+          description: "Character not found"
+  /characters/{id}/damage:
+    get:
+      tags:
+        - Characters stats
+      operationId: getCharacterDamage
+      summary: "Get character damage"
+      parameters:
+        - name: "id"
+          in: "path"
+          description: "ID of character to return"
+          required: true
+          schema:
+            type: "integer"
+            format: "int64"
+      responses:
+        '200':
+          description: "successful operation"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  avg_damageWeapon1:
+                    type: integer
+                  avg_damageWeapon2:
+                    type: integer
+        '400':
+          description: "Invalid ID supplied"
+        '404':
+          description: "Character not found"
+          
+  /stats:
+    post:
+      tags:
+        - Stats
+      operationId: createStats
+      summary: "Create a new stats"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+      responses:
+        '201':
+          description: Stats created
+        '400':
+          description: Invalid input
+    get:
+      tags:
+        - Stats
+      operationId: getStats
+      summary: "Get stats"
+      responses:
+        '200':
+          description: "successful operation"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  name:
+                    type: string
+        '400':
+          description: "Invalid ID supplied"
+        '404':
+          description: "Stats not found"
+  /stats/{id}:
+    get:
+      tags:
+        - Stats
+      operationId: getStatsById
+      summary: "Get stats by id"
+      parameters:
+        - name: "id"
+          in: "path"
+          description: "ID of stats to return"
+          required: true
+          schema:
+            type: "integer"
+            format: "int64"
+      responses:
+        '200':
+          description: "successful operation"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    format: int64
+                  name:
+                    type: string
+        '400':
+          description: "Invalid ID supplied"
+        '404':
+          description: "Stats not found"
+    put:
+      tags:
+        - Stats
+      operationId: updateStats
+      summary: "Update an existing stats"
+      parameters:
+        - name: "id"
+          in: "path"
+          description: "ID of stats to return"
+          required: true
+          schema:
+            type: "integer"
+            format: "int64"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+      responses:
+        '200':
+          description: "successful operation"
+        '400':
+          description: "Invalid ID supplied"
+        '404':
+          description: "Stats not found"
+    delete:
+      tags:
+        - Stats
+      operationId: deleteStats
+      summary: "Delete a stats"
+      parameters:
+        - name: "id"
+          in: "path"
+          description: "ID of stats to return"
+          required: true
+          schema:
+            type: "integer"
+            format: "int64"
+      responses:
+        '200':
+          description: "successful operation"
+        '400':
+          description: "Invalid ID supplied"
+        '404':
+          description: "Stats not found"
+
+          
+        
