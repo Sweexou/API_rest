@@ -14,5 +14,22 @@ services:
     volumes:
       - mysql-data:/var/lib/mysql
 
+  app:
+    build: .
+    container_name: my-app
+    environment:
+      DATABASE_URL: "mysql://root:rootpassword@mysql:3306/mydatabase"
+      JWT_SECRET: "ChuutttChuuttt"
+      BCRYPT_SALT_ROUNDS: "10"
+    command: >
+      bash -c "
+        npx prisma db push &&
+        node server.js
+      " 
+    ports:
+      - "3000:3000"
+    depends_on:
+      - mysql
+
 volumes:
   mysql-data:
