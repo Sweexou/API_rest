@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+  app:
+    build: .
+    container_name: my-app
+    environment:
+      DATABASE_URL: "file:./dev.db"
+      JWT_SECRET: "ChuutttChuuttt"
+      BCRYPT_SALT_ROUNDS: "10"
+    command: >
+      bash -c "
+        npx prisma db push &&
+        node server.js
+      " 
+    ports:
+      - "3000:3000"
